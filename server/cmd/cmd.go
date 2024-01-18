@@ -12,8 +12,8 @@ func RunServer() {
 
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/generate", handlers.GenerateHandler)
-	
+
 	port := ":8080"
-	fmt.Printf("Starting server on localhost%s...\n", port)
+	fmt.Printf("Starting server on http://localhost%s\n", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

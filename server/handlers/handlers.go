@@ -33,7 +33,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = t.Execute(w, nil)
 	if err != nil {
-		http.Error(w, "internal server error", 500)
+		w.WriteHeader(http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
+		return
 	}
 }
 
@@ -46,7 +48,12 @@ func GenerateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	input := r.FormValue("input")
-	t.Execute(w, input)
+	err = t.Execute(w, input)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
+		return
+	}
 }
 
 func ErrorHandler(w http.ResponseWriter, r *http.Request, code int, msg string) {
@@ -60,5 +67,10 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, code int, msg string) 
 		ErrorMsg:  msg,
 	}
 
-	t.Execute(w, errors)
+	err = t.Execute(w, errors)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		ErrorHandler(w, r, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
+		return
+	}
 }
