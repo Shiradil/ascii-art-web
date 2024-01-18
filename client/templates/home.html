@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<header>
+  <h1>ASCII Art Web</h1>
+  <p>generate your ASCII</p>
+</header>
+<main>
+  <form action="/generate" method="post">
+    <textarea name="input" placeholder="Write to generate here..."></textarea>
+    <label for="selectStyle">Select style:</label>
+
+    <select id="selectStyle" name="stylename">
+      <option value="standard">standard</option>
+      <option value="shadow">shadow</option>
+      <option value="thinkertoy">thinkertoy</option>
+    </select>
+
+    <button type="submit">Generate</button>
+  </form>
+
+  <pre id="output">{{.}}</pre>
+</main>
+</body>
+</html>
